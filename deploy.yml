@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: h2v-processor
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: h2v-processor
+  template:
+    metadata:
+      labels:
+        app: h2v-processor
+    spec:
+      containers:
+      - name: h2v-processor
+        image: your-docker-repo/h2v-processor:latest
+        resources:
+          limits:
+            cpu: "2"
+            memory: "4Gi"
+          requests:
+            cpu: "1"
+            memory: "2Gi"
+        env:
+        - name: AWS_REGION
+          value: "us-east-1"
+        - name: INPUT_BUCKET
+          value: "h2v-input-videos"
+        - name: OUTPUT_BUCKET
+          value: "h2v-output-videos"
